@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:backgroundTint="#FFFFFF"
     tools:context=".MainActivity">
 
     <!-- tv: textview, sw: switch -->
@@ -209,6 +211,8 @@
         android:layout_marginBottom="10dp"
         android:background="#aef2cb"
         android:text="Save Location of Parked Car"
+        android:textAllCaps="true"
+        android:textColor="#000000"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/btn_showWayPointList"
         app:layout_constraintEnd_toEndOf="parent"
@@ -223,6 +227,7 @@
         android:layout_marginTop="10dp"
         android:background="#84dbaa"
         android:text="List of Saved Locations"
+        android:textColor="#000000"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -236,6 +241,7 @@
         android:layout_marginTop="10dp"
         android:background="#42c77b"
         android:text="Show Map"
+        android:textColor="#000000"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -249,6 +255,7 @@
         android:layout_marginBottom="10dp"
         android:text="Current Location"
         android:textAllCaps="false"
+        android:textColor="#000000"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/tv_labellat"
