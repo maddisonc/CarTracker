@@ -2,6 +2,7 @@ package com.example.cartracker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Switch;
@@ -19,7 +20,8 @@ public class MainActivity extends AppCompatActivity
 
     // instantiate ui elements
     TextView tv_lat, tv_lon, tv_altitude, tv_accuracy, tv_speed, tv_sensor, tv_updates, tv_address;
-    Switch sw_locationupadtes, sw_gps;
+    @SuppressLint("UseSwitchCompatOrMaterialCode")
+    Switch sw_locationupdates, sw_gps;
 
     // var that determines whether or not location is being tracked
     boolean updateOn = false;
@@ -47,8 +49,8 @@ public class MainActivity extends AppCompatActivity
         tv_updates = findViewById(R.id.tv_updates);
         tv_address = findViewById(R.id.tv_address);
 
-        sw_locationupadtes = findViewById(R.id.sw_locationsupdates);
-        sw_locationupadtes = findViewById(R.id.sw_gps);
+        sw_locationupdates = findViewById(R.id.sw_locationsupdates);
+        sw_gps = findViewById(R.id.sw_gps);
 
         // set LocationRequest properties
         locationRequest = new LocationRequest();
@@ -61,8 +63,7 @@ public class MainActivity extends AppCompatActivity
         locationRequest.setPriority(locationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
 
         // switch between gps location and cell tower location
-        sw_gps.setOnClickListener(new View.OnClickListener()
-        {
+        sw_gps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
             {
