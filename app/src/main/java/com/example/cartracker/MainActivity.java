@@ -297,7 +297,7 @@ public class MainActivity extends AppCompatActivity
         // gets list from singleton
         savedLocations  = myApplication.getMyLocations();
 
-        // output the number of waypoints saved in list
+        // output the number of waypoints saved in list (after every interval)
         tv_wayPointCounts.setText(Integer.toString(savedLocations.size()));
 
     } // end updateUIValues method
