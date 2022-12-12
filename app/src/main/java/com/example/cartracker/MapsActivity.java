@@ -1,6 +1,8 @@
 package com.example.cartracker;
 
 import androidx.fragment.app.FragmentActivity;
+
+import android.location.Location;
 import android.os.Bundle;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -11,9 +13,14 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.example.cartracker.databinding.ActivityMapsBinding;
 
+import java.util.List;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+
+    List<Location> savedLocations;
+
 private ActivityMapsBinding binding;
 
     @Override
@@ -27,6 +34,9 @@ private ActivityMapsBinding binding;
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        MyApplication myApplication = (MyApplication)getApplicationContext();
+        savedLocations = myApplication.getMyLocations();
     }
 
     /**
@@ -44,7 +54,18 @@ private ActivityMapsBinding binding;
 
         // Add a marker in Sydney and move the camera
         LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        // mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+        // mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
+        // for each location in savedLocations list
+        for (Location location: savedLocations)
+        {
+            LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+            MarkerOptions markerOptions = new MarkerOptions();
+            markerOptions.position(latLng);
+            markerOptions.title("Lat: " + location.getLatitude() + "Lon: " + location.getLongitude());
+            mMap.addMarker(markerOptions);
+        }
+
     }
 }
