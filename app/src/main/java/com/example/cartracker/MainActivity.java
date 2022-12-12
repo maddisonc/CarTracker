@@ -142,9 +142,33 @@ public class MainActivity extends AppCompatActivity
           } // end else no permissions
       } // end updateGPS method
 
-    // updates text/UI location passed in
+    // updates text/UI values passed in
     private void updateUIValues(Location location)
     {
-    }
+        // have to parse to String because values are doubles
+        tv_lat.setText(String.valueOf(location.getLatitude()));
+        tv_lon.setText(String.valueOf(location.getLongitude()));
+        tv_accuracy.setText(String.valueOf(location.getAccuracy()));
+
+        // not all phones have the ability to check altitude
+        if (location.hasAltitude())
+        {
+            tv_altitude.setText(String.valueOf(location.getAltitude()));
+        }
+        else
+        {
+            tv_altitude.setText("Altitude not available.");
+        }
+
+        // not all phones have the ability to check speed
+        if (location.hasSpeed())
+        {
+            tv_speed.setText(String.valueOf(location.getSpeed()));
+        }
+        else
+        {
+            tv_speed.setText("Speed not available.");
+        }
+    } // end updateUIValues method
 
 } // end MainActivity
