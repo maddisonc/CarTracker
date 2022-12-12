@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity
     // dependency: Google Play Services - needed for maps, FusedLocation (added in gradle)
 
     // instantiate ui elements
-    TextView tv_lat, tv_lon, tv_altitude, tv_accuracy, tv_speed, tv_sensor, tv_updates, tv_address;
+    TextView tv_lat, tv_lon, tv_altitude, tv_accuracy, tv_speed, tv_sensor, tv_updates, tv_address, tv_wayPointCounts;
     Button btn_newWayPoint, btn_showWayPointList;
     Switch sw_locationupdates, sw_gps;
 
@@ -80,6 +80,7 @@ public class MainActivity extends AppCompatActivity
 
         btn_newWayPoint = findViewById(R.id.btn_newWayPoint);
         btn_showWayPointList = findViewById(R.id.btn_showWayPointList);
+        tv_wayPointCounts = findViewById(R.id.tv_countofCrumbs);
 
         // set LocationRequest properties
         locationRequest = new LocationRequest();
@@ -290,6 +291,14 @@ public class MainActivity extends AppCompatActivity
         {
             tv_address.setText("Unable to retrieve street address.");
         } // end catch exception
+
+        // gets access to singleton class
+        MyApplication myApplication = (MyApplication)getApplicationContext();
+        // gets list from singleton
+        savedLocations  = myApplication.getMyLocations();
+
+        // output the number of waypoints saved in list
+        tv_wayPointCounts.setText(Integer.toString(savedLocations.size()));
 
     } // end updateUIValues method
 
