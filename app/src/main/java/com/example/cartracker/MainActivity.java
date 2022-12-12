@@ -119,10 +119,23 @@ public class MainActivity extends AppCompatActivity {
         updateGPS();
     } // end onCreate
 
-    // if location updates is set to on
-    private void startLocationUpdates() {
+    // if location updates is set to off
+    private void stopLocationUpdates() {
         tv_updates.setText("Location is not being tracked.");
+        tv_lat.setText("Not tracking location.");
+        tv_lon.setText("Not tracking location.");
+        tv_speed.setText("Not tracking location.");
+        tv_address.setText("Not tracking location.");
+        tv_accuracy.setText("Not tracking location.");
+        tv_altitude.setText("Not tracking location.");
+        tv_sensor.setText("Not tracking location.");
 
+        fusedLocationProviderClient.removeLocationUpdates(locationCallBack);
+    }
+
+    // if location updates is set to on
+    private void startLocationUpdates()
+    {
         // needed for error resolve
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -135,14 +148,9 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
+        tv_updates.setText("Location is being tracked.");
         fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallBack, null);
         updateGPS();
-    }
-
-    // if location updates is set to off
-    private void stopLocationUpdates()
-    {
-        tv_updates.setText("Location is being tracked.");
     }
 
     // generated from main activity class, calls method when permissions are granted
