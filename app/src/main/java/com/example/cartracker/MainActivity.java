@@ -7,6 +7,8 @@ import androidx.core.app.ActivityCompat;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,6 +23,8 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     public static final int DEFAULT_UPDATE_INTERVAL = 30;
@@ -131,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
         tv_sensor.setText("Not tracking location.");
 
         fusedLocationProviderClient.removeLocationUpdates(locationCallBack);
-    }
+    } // end stopLocationUpdates()
 
     // if location updates is set to on
     private void startLocationUpdates()
@@ -151,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
         tv_updates.setText("Location is being tracked.");
         fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallBack, null);
         updateGPS();
-    }
+    } // end startLocationUpdates()
 
     // generated from main activity class, calls method when permissions are granted
     @Override
@@ -227,6 +231,21 @@ public class MainActivity extends AppCompatActivity {
         else
         {
             tv_speed.setText("Speed not available.");
+        }
+
+        // used to translate location data into street address
+        Geocoder geocoder = new Geocoder(MainActivity.this);
+
+        // catches exception in the case where the geocoder can not find the street address
+        try
+        {
+            // top 1 address from lat and lon data
+            List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+            tv_address.setText(addresses.get(0).getAddressLine(0));
+        }
+        catch (Exception e)
+        {
+            tv_address.setText("Unable to retrieve street address.");
         }
     } // end updateUIValues method
 
