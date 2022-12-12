@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <!-- tv: textview, sw: switch -->
+
     <TextView
         android:id="@+id/tv_labellat"
         android:layout_width="100dp"
