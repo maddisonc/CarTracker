@@ -16,7 +16,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 
@@ -39,6 +41,8 @@ public class MainActivity extends AppCompatActivity
 
     // LocationRequest - class that influences FusedLocationProvider settings
     LocationRequest locationRequest;
+
+    LocationCallback locationCallBack;
 
     // three sources of location data: gps, cell tower (triangulation used to find dist from each tower), wifi (connected to wifi)
     // FusedLocationProvider: fuses all three sources - allows choice of very accurate data or less accurate data to save battery
@@ -73,6 +77,17 @@ public class MainActivity extends AppCompatActivity
         // accuracy level of location
         locationRequest.setPriority(locationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
 
+        // triggered whenever update interval is met (5 sec, 30 sec)
+        locationCallBack = new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                super.onLocationResult(locationResult);
+
+                // save location
+                updateUIValues(locationResult.getLastLocation());
+            }
+        };
+
         // switch between gps location and cell tower location
         sw_gps.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,19 +97,50 @@ public class MainActivity extends AppCompatActivity
                 {
                     // most accurate - use gps
                     locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-                    tv_sensor.setText("Retrieving location from GPS.");
+                    tv_sensor.setText("Location from GPS.");
                 }
                 else
                 {
                     // save battery by using cell tower and wifi location (less accurate)
                     locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-                    tv_sensor.setText("Retrieving location from cell tower data and wifi connection.");
+                    tv_sensor.setText("Location from cell tower data and wifi connection.");
                 }
             } // end gps/cell/wifi switch onClick
         }); // end gps switch listener
 
+        sw_locationupdates.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (sw_locationupdates.isChecked())
+                {
+                    // turn on location tracking
+                    startLocationUpdates();
+                }
+                else
+                {
+                    // turn off location tracking
+                    stopLocationUpdates();
+                }
+            }
+        });
+
+
         updateGPS();
       } // end onCreate
+
+    // if location updates is set to on
+    private void startLocationUpdates()
+    {
+        tv_updates.setText("Location is not being tracked.");
+        fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallBack, null);
+        updateGPS();
+    }
+
+    // if location updates is set to off
+    private void stopLocationUpdates()
+    {
+        tv_updates.setText("Location is being tracked.");
+    }
 
     // generated from main activity class, calls method when permissions are granted
     @Override
