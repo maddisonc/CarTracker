@@ -29,5 +29,11 @@ public class MainActivity extends AppCompatActivity {
 
         sw_locationupadtes = findViewById(R.id.sw_locationsupdates);
         sw_locationupadtes = findViewById(R.id.sw_gps);
+
+        // three sources of location data: gps, cell tower (triangulation used to find dist from each tower), wifi (connected to wifi)
+        // FusedLocationProvider: fuses all three sources - allows choice of very accurate data or less accurate data to save battery
+
+
+        // dependency: Google Play Services - needed for maps, FusedLocation
     }
 }
