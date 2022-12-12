@@ -13,6 +13,7 @@ import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,11 +38,17 @@ public class MainActivity extends AppCompatActivity
 
     // instantiate ui elements
     TextView tv_lat, tv_lon, tv_altitude, tv_accuracy, tv_speed, tv_sensor, tv_updates, tv_address;
-    @SuppressLint("UseSwitchCompatOrMaterialCode")
+    Button btn_newWayPoint, btn_showWayPointList;
     Switch sw_locationupdates, sw_gps;
 
     // var that determines whether or not location is being tracked
     boolean updateOn = false;
+
+    // current location
+    Location currentLocation;
+
+    // list of saved locations (waypoints)
+    List<Location> savedLocations;
 
     // LocationRequest - class that influences FusedLocationProvider settings
     LocationRequest locationRequest;
@@ -71,6 +78,9 @@ public class MainActivity extends AppCompatActivity
         sw_locationupdates = findViewById(R.id.sw_locationsupdates);
         sw_gps = findViewById(R.id.sw_gps);
 
+        btn_newWayPoint = findViewById(R.id.btn_newWayPoint);
+        btn_showWayPointList = findViewById(R.id.btn_showWayPointList);
+
         // set LocationRequest properties
         locationRequest = new LocationRequest();
 
@@ -91,6 +101,23 @@ public class MainActivity extends AppCompatActivity
                 updateUIValues(locationResult.getLastLocation());
             }
         }; // end locationCallback
+
+        // clicking new waypoint
+        btn_newWayPoint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                // get gps location
+
+
+                // add location to list
+                // gets access to singleton class
+                MyApplication myApplication = (MyApplication)getApplicationContext();
+                // gets list from singleton
+                savedLocations  = myApplication.getMyLocations();
+                savedLocations.add(currentLocation);
+            }
+        }); // end clicked new waypoint
 
         // switch between gps location and cell tower location
         sw_gps.setOnClickListener(new View.OnClickListener() {
@@ -204,6 +231,8 @@ public class MainActivity extends AppCompatActivity
                 {
                     // store values of location and put into ui
                     updateUIValues(location);
+                    // saves current location to var
+                    currentLocation = location;
                 }
             });
         } // end if permissions given
