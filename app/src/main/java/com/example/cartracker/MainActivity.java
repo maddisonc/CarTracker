@@ -26,7 +26,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+{
     public static final int DEFAULT_UPDATE_INTERVAL = 30;
     public static final int FASTEST_UPDATE_INTERVAL = 5;
     // request code
@@ -52,7 +53,8 @@ public class MainActivity extends AppCompatActivity {
     FusedLocationProviderClient fusedLocationProviderClient;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -88,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
                 // save location
                 updateUIValues(locationResult.getLastLocation());
             }
-        };
+        }; // end locationCallback
 
         // switch between gps location and cell tower location
         sw_gps.setOnClickListener(new View.OnClickListener() {
@@ -106,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
             } // end gps/cell/wifi switch onClick
         }); // end gps switch listener
 
+        // on/off switch for location updates
         sw_locationupdates.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -117,9 +120,9 @@ public class MainActivity extends AppCompatActivity {
                     stopLocationUpdates();
                 }
             }
-        });
+        }); // end location updates switch
 
-
+        // calls gps update - updates values to send to ui
         updateGPS();
     } // end onCreate
 
@@ -134,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
         tv_altitude.setText("Not tracking location.");
         tv_sensor.setText("Not tracking location.");
 
+        // turns off gps tracking
         fusedLocationProviderClient.removeLocationUpdates(locationCallBack);
     } // end stopLocationUpdates()
 
@@ -141,7 +145,9 @@ public class MainActivity extends AppCompatActivity {
     private void startLocationUpdates()
     {
         // needed for error resolve
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+        {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
             // here to request the missing permissions, and then overriding
@@ -153,21 +159,27 @@ public class MainActivity extends AppCompatActivity {
         }
 
         tv_updates.setText("Location is being tracked.");
+        // reuqests location to send to updateGPS method
         fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallBack, null);
+        // calls updates to send to ui
         updateGPS();
     } // end startLocationUpdates()
 
     // generated from main activity class, calls method when permissions are granted
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
+    {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        // request code = 99, if code is correct
         switch (requestCode)
         {
             case PERMISSIONS_FINE_LOCATION:
+                // permissions are granted
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
                 {
                     updateGPS();
                 }
+                // no permissions
                 else
                 {
                     Toast.makeText(this, "This app requires location permissions.", Toast.LENGTH_SHORT).show();
@@ -177,33 +189,34 @@ public class MainActivity extends AppCompatActivity {
 
     // calls updateUIValues if permissions are met
     private void updateGPS()
-      {
-          // ask user for location permissions
-          //get current location from fused client
-          // update ui
-          fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(MainActivity.this);
-          if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
-          {
-              // user gives permission
-              fusedLocationProviderClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
-                  @Override
-                  public void onSuccess(Location location) {
-                      // store values of location and put into ui
-                      updateUIValues(location);
-                  }
-              });
-          } // end if permissions given
-          else
-          {
-              // no permissions yet
-
-              // check if android build is recent enough (at least 23: M)
-              if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-              {
+    {
+        // ask user for location permissions
+        //get current location from fused client
+        // update ui
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(MainActivity.this);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+        {
+            // user gives permission
+            fusedLocationProviderClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>()
+            {
+                @Override
+                public void onSuccess(Location location)
+                {
+                    // store values of location and put into ui
+                    updateUIValues(location);
+                }
+            });
+        } // end if permissions given
+        else
+        {
+            // no permissions yet
+            // check if android build is recent enough (at least 23: M)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            {
                   requestPermissions(new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSIONS_FINE_LOCATION);
-              }
-          } // end else no permissions
-      } // end updateGPS method
+            }
+        } // end else no permissions
+    } // end updateGPS method
 
     // updates text/UI values passed in
     private void updateUIValues(Location location)
@@ -234,6 +247,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // used to translate location data into street address
+        // can adjust location in emulator settings (set location of phone)
         Geocoder geocoder = new Geocoder(MainActivity.this);
 
         // catches exception in the case where the geocoder can not find the street address
@@ -246,7 +260,8 @@ public class MainActivity extends AppCompatActivity {
         catch (Exception e)
         {
             tv_address.setText("Unable to retrieve street address.");
-        }
+        } // end catch exception
+
     } // end updateUIValues method
 
 } // end MainActivity
