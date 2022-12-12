@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity
 
     // instantiate ui elements
     TextView tv_lat, tv_lon, tv_altitude, tv_accuracy, tv_speed, tv_sensor, tv_updates, tv_address, tv_wayPointCounts;
-    Button btn_newWayPoint, btn_showWayPointList;
+    Button btn_newWayPoint, btn_showWayPointList, btn_showMap;
     Switch sw_locationupdates, sw_gps;
 
     // var that determines whether or not location is being tracked
@@ -82,6 +82,7 @@ public class MainActivity extends AppCompatActivity
         btn_newWayPoint = findViewById(R.id.btn_newWayPoint);
         btn_showWayPointList = findViewById(R.id.btn_showWayPointList);
         tv_wayPointCounts = findViewById(R.id.tv_countofCrumbs);
+        btn_showMap = findViewById(R.id.btn_showMap);
 
         // set LocationRequest properties
         locationRequest = new LocationRequest();
@@ -130,7 +131,18 @@ public class MainActivity extends AppCompatActivity
                 Intent i = new Intent(MainActivity.this, ShowSavedLocationsList.class);
                 startActivity(i);
             }
-        });
+        }); // end show waypoints in String list
+
+        // click show waypoints on map
+        btn_showMap.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                Intent i = new Intent(MainActivity.this, MapsActivity.class);
+                startActivity(i);
+            }
+        }); // end show waypoints on map
 
         // switch between gps location and cell tower location
         sw_gps.setOnClickListener(new View.OnClickListener() {
