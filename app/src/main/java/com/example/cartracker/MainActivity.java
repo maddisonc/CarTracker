@@ -92,6 +92,8 @@ public class MainActivity extends AppCompatActivity
                 }
             } // end gps/cell/wifi switch onClick
         }); // end gps switch listener
+
+        updateGPS();
       } // end onCreate
 
     // generated from main activity class, calls method when permissions are granted
