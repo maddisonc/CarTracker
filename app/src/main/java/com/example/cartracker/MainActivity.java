@@ -3,13 +3,15 @@ package com.example.cartracker;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Switch;
 import android.widget.TextView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationRequest;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+{
     public static final int DEFAULT_UPDATE_INTERVAL = 30;
     public static final int FASTEST_UPDATE_INTERVAL = 5;
 
@@ -30,7 +32,8 @@ public class MainActivity extends AppCompatActivity {
     FusedLocationProviderClient fusedLocationProviderClient;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -57,5 +60,27 @@ public class MainActivity extends AppCompatActivity {
         // accuracy level of location
         locationRequest.setPriority(locationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
 
-    }
-}
+        // switch between gps location and cell tower location
+        sw_gps.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                if (sw_gps.isChecked())
+                {
+                    // most accurate - use gps
+                    locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+                    tv_sensor.setText("Retrieving location from GPS.");
+                }
+                else
+                {
+                    // save battery by using cell tower and wifi location (less accurate)
+                    locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+                    tv_sensor.setText("Retrieving location from cell tower data and wifi connection.");
+                }
+            } // end gps/cell/wifi switch onClick
+        }); // end gps switch listener
+
+    } // end onCreate
+
+} // end MainActivity
