@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity
     // dependency: Google Play Services - needed for maps, FusedLocation (added in gradle)
 
     // instantiate ui elements
-    TextView tv_lat, tv_lon, tv_altitude, tv_accuracy, tv_speed, tv_sensor, tv_updates, tv_address, tv_wayPointCounts;
+    TextView tv_lat, tv_lon, tv_altitude, tv_speed, tv_sensor, tv_updates, tv_address, tv_wayPointCounts;
     Button btn_newWayPoint, btn_showWayPointList, btn_showMap;
     Switch sw_locationupdates, sw_gps;
 
@@ -70,7 +70,6 @@ public class MainActivity extends AppCompatActivity
         tv_lat = findViewById(R.id.tv_lat);
         tv_lon = findViewById(R.id.tv_lon);
         tv_altitude = findViewById(R.id.tv_altitude);
-        tv_accuracy = findViewById(R.id.tv_accuracy);
         tv_speed = findViewById(R.id.tv_speed);
         tv_sensor = findViewById(R.id.tv_sensor);
         tv_updates = findViewById(R.id.tv_updates);
@@ -155,7 +154,7 @@ public class MainActivity extends AppCompatActivity
                 } else {
                     // save battery by using cell tower and wifi location (less accurate)
                     locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-                    tv_sensor.setText("Location from cell tower data and wifi connection.");
+                    tv_sensor.setText("Location from cell tower and wifi data.");
                 }
             } // end gps/cell/wifi switch onClick
         }); // end gps switch listener
@@ -185,7 +184,6 @@ public class MainActivity extends AppCompatActivity
         tv_lon.setText("Not tracking location.");
         tv_speed.setText("Not tracking location.");
         tv_address.setText("Not tracking location.");
-        tv_accuracy.setText("Not tracking location.");
         tv_altitude.setText("Not tracking location.");
         tv_sensor.setText("Not tracking location.");
 
@@ -278,7 +276,6 @@ public class MainActivity extends AppCompatActivity
         // have to parse to String because values are doubles
         tv_lat.setText(String.valueOf(location.getLatitude()));
         tv_lon.setText(String.valueOf(location.getLongitude()));
-        tv_accuracy.setText(String.valueOf(location.getAccuracy()));
 
         // not all phones have the ability to check altitude
         if (location.hasAltitude())

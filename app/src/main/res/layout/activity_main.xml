@@ -13,7 +13,8 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="Lat:"
+        android:text="Latitude:"
+        android:textAlignment="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -31,7 +32,8 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="lon:"
+        android:text="Longitude: "
+        android:textAlignment="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_labellat" />
 
@@ -50,6 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Altitude:"
+        android:textAlignment="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_labellon" />
 
@@ -62,30 +65,13 @@
         app:layout_constraintTop_toTopOf="@+id/tv_labelaltitude" />
 
     <TextView
-        android:id="@+id/tv_labelaccuracy"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Accuracy:"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_labelaltitude" />
-
-    <TextView
-        android:id="@+id/tv_accuracy"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="0.00"
-        app:layout_constraintStart_toEndOf="@+id/tv_labelaccuracy"
-        app:layout_constraintTop_toTopOf="@+id/tv_labelaccuracy" />
-
-    <TextView
         android:id="@+id/tv_labelspeed"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:text="Speed:"
+        android:textAlignment="center"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_labelaccuracy" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_labelaltitude" />
 
     <TextView
         android:id="@+id/tv_speed"
@@ -101,6 +87,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Sensor:"
+        android:textAlignment="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sw_gps" />
 
@@ -108,7 +95,7 @@
         android:id="@+id/tv_sensor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cell Tower + Wifi"
+        android:text="Location from cell tower and wifi data."
         app:layout_constraintStart_toEndOf="@+id/tv_labelsensor"
         app:layout_constraintTop_toTopOf="@+id/tv_labelsensor" />
 
@@ -117,6 +104,7 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:text="Updates:"
+        android:textAlignment="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sw_locationsupdates" />
 
@@ -124,7 +112,7 @@
         android:id="@+id/tv_updates"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Off"
+        android:text="Location is being tracked."
         app:layout_constraintStart_toEndOf="@+id/tv_labelupdates"
         app:layout_constraintTop_toTopOf="@+id/tv_labelupdates" />
 
@@ -132,7 +120,7 @@
         android:id="@+id/sw_locationsupdates"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="5dp"
         android:checked="true"
         android:minHeight="48dp"
         android:text="Location Updates"
@@ -154,8 +142,9 @@
 
     <TextView
         android:id="@+id/tv_address"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="304dp"
+        android:layout_height="41dp"
+        android:text="address"
         app:layout_constraintStart_toEndOf="@+id/tv_lbladdress"
         app:layout_constraintTop_toTopOf="@+id/tv_lbladdress" />
 
@@ -165,6 +154,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Address:"
+        android:textAlignment="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_labelspeed" />
 
@@ -172,18 +162,19 @@
         android:id="@+id/divider"
         android:layout_width="409dp"
         android:layout_height="1dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="10dp"
         android:background="?android:attr/listDivider"
         app:layout_constraintTop_toBottomOf="@+id/tv_address"
-        tools:layout_editor_absoluteX="1dp"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="1dp" />
 
     <TextView
         android:id="@+id/tv_labelCrumbCounter"
-        android:layout_width="wrap_content"
+        android:layout_width="125dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:text="Waypoints: "
+        android:text="Saved Locations: "
+        android:textAlignment="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tv_labelsensor" />
 
@@ -195,11 +186,27 @@
         app:layout_constraintStart_toEndOf="@+id/tv_labelCrumbCounter"
         app:layout_constraintTop_toTopOf="@+id/tv_labelCrumbCounter" />
 
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="409dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintBottom_toTopOf="@+id/btn_newWayPoint"
+        app:layout_constraintTop_toBottomOf="@+id/tv_labelCrumbCounter"
+        app:layout_constraintVertical_bias="0.476"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp" />
+
     <Button
         android:id="@+id/btn_newWayPoint"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="New Waypoint"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:text="Save Location of Parked Car"
+        app:layout_constraintBottom_toTopOf="@+id/btn_showWayPointList"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -209,7 +216,7 @@
         android:id="@+id/btn_showWayPointList"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Show Waypoint List"
+        android:text="List of Saved Locations"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -223,5 +230,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_showWayPointList" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="Current Location"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/tv_labellat"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
