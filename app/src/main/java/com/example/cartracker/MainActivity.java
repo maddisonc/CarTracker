@@ -22,8 +22,7 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 
-public class MainActivity extends AppCompatActivity
-{
+public class MainActivity extends AppCompatActivity {
     public static final int DEFAULT_UPDATE_INTERVAL = 30;
     public static final int FASTEST_UPDATE_INTERVAL = 5;
     // request code
@@ -49,8 +48,7 @@ public class MainActivity extends AppCompatActivity
     FusedLocationProviderClient fusedLocationProviderClient;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -91,16 +89,12 @@ public class MainActivity extends AppCompatActivity
         // switch between gps location and cell tower location
         sw_gps.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
-                if (sw_gps.isChecked())
-                {
+            public void onClick(View view) {
+                if (sw_gps.isChecked()) {
                     // most accurate - use gps
                     locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
                     tv_sensor.setText("Location from GPS.");
-                }
-                else
-                {
+                } else {
                     // save battery by using cell tower and wifi location (less accurate)
                     locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
                     tv_sensor.setText("Location from cell tower data and wifi connection.");
@@ -111,13 +105,10 @@ public class MainActivity extends AppCompatActivity
         sw_locationupdates.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (sw_locationupdates.isChecked())
-                {
+                if (sw_locationupdates.isChecked()) {
                     // turn on location tracking
                     startLocationUpdates();
-                }
-                else
-                {
+                } else {
                     // turn off location tracking
                     stopLocationUpdates();
                 }
@@ -126,12 +117,24 @@ public class MainActivity extends AppCompatActivity
 
 
         updateGPS();
-      } // end onCreate
+    } // end onCreate
 
     // if location updates is set to on
-    private void startLocationUpdates()
-    {
+    private void startLocationUpdates() {
         tv_updates.setText("Location is not being tracked.");
+
+        // needed for error resolve
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+
         fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallBack, null);
         updateGPS();
     }
