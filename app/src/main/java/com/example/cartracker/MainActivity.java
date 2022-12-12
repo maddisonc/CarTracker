@@ -109,9 +109,10 @@ public class MainActivity extends AppCompatActivity
                 {
                     Toast.makeText(this, "This app requires location permissions.", Toast.LENGTH_SHORT).show();
                 }
-        }
-    }
+        } // end switch
+    } // end check for permissions
 
+    // calls updateUIValues if permissions are met
     private void updateGPS()
       {
           // ask user for location permissions
@@ -125,6 +126,7 @@ public class MainActivity extends AppCompatActivity
                   @Override
                   public void onSuccess(Location location) {
                       // store values of location and put into ui
+                      updateUIValues(location);
                   }
               });
           } // end if permissions given
@@ -139,5 +141,10 @@ public class MainActivity extends AppCompatActivity
               }
           } // end else no permissions
       } // end updateGPS method
+
+    // updates text/UI location passed in
+    private void updateUIValues(Location location)
+    {
+    }
 
 } // end MainActivity
